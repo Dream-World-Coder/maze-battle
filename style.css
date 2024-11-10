@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1e1e2e, #2d2d44);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+  padding: 2rem;
+  text-align: center;
+  padding-bottom: 35vh;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #4a9eff;
+  text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 15px;
+  margin: 2rem 0;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.levels {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.level-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 15px;
+  width: 300px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+
+.level-card:hover {
+  transform: translateY(-5px);
+}
+
+.level-title {
+  color: #4a9eff;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.level-info {
+  color: #cccccc;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #4a9eff, #2d7fff);
+  color: white;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
+}
+
+.btn-secondary {
+  background: linear-gradient(45deg, #3a3a5a, #4a4a6a);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.game-features {
+  text-align: left;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+}
+
+.feature-title {
+  color: #4a9eff;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-list {
+  color: #cccccc;
+  list-style-type: none;
+}
+
+.feature-list li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.feature-list li:before {
+  content: "•";
+  color: #4a9eff;
+  position: absolute;
+  left: 0;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgba(74, 158, 255, 0.5);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(74, 158, 255, 0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  .level-card {
+    width: 100%;
+    max-width: 300px;
+  }
+  .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,211 @@
+// let MAZE_SIZE = Number(prompt("Enter Maze size: n for n*n, odd: ")); // Must be odd for the algorithm used
+// while(MAZE_SIZE%2 == 0){
+//   MAZE_SIZE = Number(prompt("Enter Maze size: n for n*n, odd: "));
+// }
+// let TIME_LIMIT = Number(prompt("Enter the time duration in minutes: ")) * 60;
+
+let MAZE_SIZE = 11;
+let TIME_LIMIT = 1000;
+
+// problem with n [double boundaries, uncrossable] : 5, 13
+
+let maze = [];
+let playerPos = { x: 0, y: 0 };
+let exitPos = { x: 0, y: 0 };
+let timeLeft = TIME_LIMIT;
+let timerInterval;
+let gameActive = false;
+
+function generateMaze() {
+  // Initialize maze with walls
+  maze = Array(MAZE_SIZE)
+    .fill()
+    .map(() => Array(MAZE_SIZE).fill(1));
+
+  // Start from center
+  const start = Math.floor(MAZE_SIZE / 2);
+  carvePassages(start, start);
+
+  // Set player starting position
+  // now at center - use random val (1-MazeSize)
+  // playerPos = { x: Math.random(1, MAZE_SIZE-3), y: Math.random(1, MAZE_SIZE-3) };
+  playerPos = { x: start, y: start };
+
+  // Create exit on edge
+  const side = Math.floor(Math.random() * 4);
+  switch (side) {
+    case 0: // Top
+      exitPos = { x: 1, y: 0 };
+      maze[0][1] = 0;
+      break;
+    case 1: // Right
+      exitPos = { x: MAZE_SIZE - 1, y: MAZE_SIZE - 2 };
+      maze[MAZE_SIZE - 2][MAZE_SIZE - 1] = 0;
+      break;
+    case 2: // Bottom
+      exitPos = { x: MAZE_SIZE - 2, y: MAZE_SIZE - 1 };
+      maze[MAZE_SIZE - 1][MAZE_SIZE - 2] = 0;
+      break;
+    case 3: // Left
+      exitPos = { x: 0, y: 1 };
+      maze[1][0] = 0;
+      break;
+  }
+}
+
+function carvePassages(x, y) {
+  maze[y][x] = 0;
+
+  // Define possible directions
+  const directions = [
+    { dx: 0, dy: -2 }, // Up
+    { dx: 2, dy: 0 }, // Right
+    { dx: 0, dy: 2 }, // Down
+    { dx: -2, dy: 0 }, // Left
+  ];
+
+  // Shuffle directions
+  for (let i = directions.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [directions[i], directions[j]] = [directions[j], directions[i]];
+  }
+
+  // Try each direction
+  for (const dir of directions) {
+    const nextX = x + dir.dx;
+    const nextY = y + dir.dy;
+
+    if (
+      nextX > 0 &&
+      nextX < MAZE_SIZE - 1 &&
+      nextY > 0 &&
+      nextY < MAZE_SIZE - 1 &&
+      maze[nextY][nextX] === 1
+    ) {
+      // Carve passage
+      maze[y + dir.dy / 2][x + dir.dx / 2] = 0;
+      carvePassages(nextX, nextY);
+    }
+  }
+}
+
+function renderMaze() {
+  const mazeElement = document.getElementById("maze");
+  mazeElement.style.display = "grid";
+  mazeElement.style.gridTemplateColumns = `repeat(${MAZE_SIZE}, 30px)`;
+  mazeElement.innerHTML = "";
+
+  for (let y = 0; y < MAZE_SIZE; y++) {
+    for (let x = 0; x < MAZE_SIZE; x++) {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+
+      if (x === playerPos.x && y === playerPos.y) {
+        cell.classList.add("player");
+      } else if (x === exitPos.x && y === exitPos.y) {
+        cell.classList.add("exit");
+      } else if (maze[y][x] === 1) {
+        cell.classList.add("wall");
+      } else {
+        cell.classList.add("path");
+      }
+
+      mazeElement.appendChild(cell);
+    }
+  }
+}
+
+function move(direction) {
+  if (!gameActive) return;
+
+  let newX = playerPos.x;
+  let newY = playerPos.y;
+
+  switch (direction) {
+    case "up":
+      newY--;
+      break;
+    case "right":
+      newX++;
+      break;
+    case "down":
+      newY++;
+      break;
+    case "left":
+      newX--;
+      break;
+  }
+
+  // Check if move is valid
+  if (
+    newX >= 0 &&
+    newX < MAZE_SIZE &&
+    newY >= 0 &&
+    newY < MAZE_SIZE &&
+    maze[newY][newX] === 0
+  ) {
+    playerPos.x = newX;
+    playerPos.y = newY;
+    renderMaze();
+
+    // Check for win
+    if (newX === exitPos.x && newY === exitPos.y) {
+      endGame(true);
+    }
+  }
+}
+
+function updateTimer() {
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  document.getElementById("timer").textContent =
+    `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+  if (timeLeft === 0) {
+    endGame(false);
+  } else {
+    timeLeft--;
+  }
+}
+
+function endGame(won) {
+  gameActive = false;
+  clearInterval(timerInterval);
+
+  const gameOver = document.getElementById("gameOver");
+  const gameOverText = document.getElementById("gameOverText");
+  gameOverText.textContent = won ? "You Won!" : "Time's Up!";
+  gameOver.style.display = "block";
+}
+
+function startGame() {
+  gameActive = true;
+  timeLeft = TIME_LIMIT;
+  generateMaze();
+  renderMaze();
+
+  document.getElementById("gameOver").style.display = "none";
+  clearInterval(timerInterval);
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+// Keyboard controls
+document.addEventListener("keydown", (e) => {
+  switch (e.key) {
+    case "ArrowUp":
+      move("up");
+      break;
+    case "ArrowRight":
+      move("right");
+      break;
+    case "ArrowDown":
+      move("down");
+      break;
+    case "ArrowLeft":
+      move("left");
+      break;
+  }
+});
+
+// Start game
+startGame();

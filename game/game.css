@@ -1,0 +1,112 @@
+.game-container {
+  position: relative;
+  margin: 20px;
+}
+
+.maze {
+  background: #000;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #333;
+  box-sizing: border-box;
+}
+
+.wall {
+  background: #2c3e50;
+}
+
+.path {
+  background: #000;
+}
+
+.player {
+  background: #e74c3c;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.cpu {
+  background: #fff;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+.exit {
+  background: #27ae60;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  margin: 20px;
+}
+
+.control-btn {
+  padding: 15px 25px;
+  background: #3498db;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.control-btn:hover {
+  background: #2980b9;
+}
+
+.timer {
+  font-size: 24px;
+  margin: 10px;
+  color: #e74c3c;
+}
+
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  display: none;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.side-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn:active {
+  background-color: #3e8e41;
+}
