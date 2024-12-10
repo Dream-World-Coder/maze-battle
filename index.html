@@ -1,150 +1,175 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maze Battle</title>
-    <link type="image/svg+xml" rel="icon" href="./favicon.svg" />
-    <link rel="stylesheet" href="./game/main.css" />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Maze Battle</title>
+        <link type="image/svg+xml" rel="icon" href="./favicon.svg" />
+        <link rel="stylesheet" href="./game/main.css" />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
 
-  <body>
-    <div class="container">
-      <h1>Maze Battle</h1>
-      <img
-        src="./game.jpg"
-        alt="Strategic Maze Runner Game Screenshot"
-        class="hero-image"
-      />
+    <body>
+        <div class="container">
+            <h1>Maze Battle</h1>
+            <img
+                src="./game.jpg"
+                alt="Strategic Maze Runner Game Screenshot"
+                class="hero-image"
+            />
 
-      <div class="game-features">
-        <h2 class="feature-title">Strategic Two-Player Maze Battle</h2>
-        <ul class="feature-list">
-          <li>Turn-based gameplay like chess - players move one at a time</li>
-          <li>Race against your <strong>opponent and the clock</strong></li>
-          <li>
-            Play against another player[not available now] or challenge the CPU
-          </li>
-          <li>Find the exit before time runs out!</li>
-          <li>
-            USE:
-            <kbd>A</kbd>
-            <kbd>S</kbd>
-            <kbd>D</kbd>
-            <kbd>W</kbd>
-            or
-            <kbd> arrow keys </kbd> to navigate.
-          </li>
-        </ul>
-      </div>
+            <div class="game-features">
+                <h2 class="feature-title">Strategic Two-Player Maze Battle</h2>
+                <ul class="feature-list">
+                    <li>
+                        Turn-based gameplay like chess - players move one at a
+                        time
+                    </li>
+                    <li>
+                        Race against your
+                        <strong>opponent and the clock</strong>
+                    </li>
+                    <li>
+                        Play against another player[not available now] or
+                        challenge the CPU
+                    </li>
+                    <li>Find the exit before time runs out!</li>
+                    <li>
+                        USE:
+                        <kbd>A</kbd>
+                        <kbd>S</kbd>
+                        <kbd>D</kbd>
+                        <kbd>W</kbd>
+                        or
+                        <kbd> arrow keys </kbd> to navigate.
+                    </li>
+                </ul>
+            </div>
 
-      <div class="buttons">
-        <button class="btn btn-primary">Start New Game</button>
-      </div>
+            <div class="buttons">
+                <button class="btn btn-primary">Start New Game</button>
+            </div>
 
-      <div class="levels">
-        <div data-level="beginner" class="level-card" onclick="">
-          <h3 class="level-title">Beginner Maze</h3>
-          <div class="level-info">
-            <p>15 x 15 Grid</p>
-            <p>3 Minutes</p>
-            <p>Perfect for new players</p>
-          </div>
+            <div class="levels">
+                <div data-level="beginner" class="level-card" onclick="">
+                    <h3 class="level-title">Beginner Maze</h3>
+                    <div class="level-info">
+                        <p>15 x 15 Grid</p>
+                        <p>3 Minutes</p>
+                        <p>Perfect for new players</p>
+                    </div>
+                </div>
+
+                <div data-level="advanced" class="level-card" onclick="">
+                    <h3 class="level-title">Advanced Maze</h3>
+                    <div class="level-info">
+                        <p>25 x 25 Grid</p>
+                        <p>7 Minutes</p>
+                        <p>For experienced runners</p>
+                    </div>
+                </div>
+
+                <div data-level="expert" class="level-card" onclick="">
+                    <h3 class="level-title">Expert Maze</h3>
+                    <div class="level-info">
+                        <p>37 x 37 Grid</p>
+                        <p>10 Minutes</p>
+                        <p>Ultimate challenge</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button id="view-results" class="btn btn-secondary" onclick="">
+                    See Records
+                </button>
+            </div>
+            <!-- Modal Structure -->
+            <div id="resultsModal" class="modal" style="display: none">
+                <div class="modal-content">
+                    <span id="closeModal" class="close">&times;</span>
+                    <h2>Game Results</h2>
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Level</th>
+                                <th>Result</th>
+                                <th>Time Spent (seconds)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+        <script type="text/javascript" src="./script.js"></script>
+        <script>
+            document
+                .getElementById("view-results")
+                .addEventListener("click", function () {
+                    const results = JSON.parse(
+                        localStorage.getItem("mazeRunnerResults") || "[]",
+                    );
+                    const resultsTable = document
+                        .getElementById("resultsTable")
+                        .querySelector("tbody");
 
-        <div data-level="advanced" class="level-card" onclick="">
-          <h3 class="level-title">Advanced Maze</h3>
-          <div class="level-info">
-            <p>25 x 25 Grid</p>
-            <p>7 Minutes</p>
-            <p>For experienced runners</p>
-          </div>
-        </div>
+                    // Clear any previous data in the table
+                    resultsTable.innerHTML = "";
 
-        <div data-level="expert" class="level-card" onclick="">
-          <h3 class="level-title">Expert Maze</h3>
-          <div class="level-info">
-            <p>37 x 37 Grid</p>
-            <p>10 Minutes</p>
-            <p>Ultimate challenge</p>
-          </div>
-        </div>
-      </div>
+                    // Populate table with results
+                    results.forEach((result) => {
+                        const row = resultsTable.insertRow();
+                        const dateCell = row.insertCell(0);
+                        const levelCell = row.insertCell(1);
+                        const resultCell = row.insertCell(2);
+                        const timeSpentCell = row.insertCell(3);
 
-      <div class="buttons">
-        <button id="view-results" class="btn btn-secondary" onclick="">
-          See Records
-        </button>
-      </div>
-      <!-- Modal Structure -->
-      <div id="resultsModal" class="modal" style="display: none">
-        <div class="modal-content">
-          <span id="closeModal" class="close">&times;</span>
-          <h2>Game Results</h2>
-          <table id="resultsTable">
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Level</th>
-                <th>Result</th>
-                <th>Time Spent (seconds)</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <script type="text/javascript" src="./script.js"></script>
-    <script>
-      document
-        .getElementById("view-results")
-        .addEventListener("click", function () {
-          const results = JSON.parse(
-            localStorage.getItem("mazeRunnerResults") || "[]",
-          );
-          const resultsTable = document
-            .getElementById("resultsTable")
-            .querySelector("tbody");
+                        dateCell.textContent = new Date(
+                            result.date,
+                        ).toLocaleString();
+                        levelCell.textContent = result.level;
+                        resultCell.textContent =
+                            result.result === "player"
+                                ? "Player Won"
+                                : "CPU Won";
+                        timeSpentCell.textContent = result.timeSpent;
+                    });
 
-          // Clear any previous data in the table
-          resultsTable.innerHTML = "";
+                    // Show the modal
+                    document.getElementById("resultsModal").style.display =
+                        "block";
+                });
 
-          // Populate table with results
-          results.forEach((result) => {
-            const row = resultsTable.insertRow();
-            const dateCell = row.insertCell(0);
-            const levelCell = row.insertCell(1);
-            const resultCell = row.insertCell(2);
-            const timeSpentCell = row.insertCell(3);
+            // Close modal when 'X' is clicked
+            document
+                .getElementById("closeModal")
+                .addEventListener("click", function () {
+                    document.getElementById("resultsModal").style.display =
+                        "none";
+                });
 
-            dateCell.textContent = new Date(result.date).toLocaleString();
-            levelCell.textContent = result.level;
-            resultCell.textContent =
-              result.result === "player" ? "Player Won" : "CPU Won";
-            timeSpentCell.textContent = result.timeSpent;
-          });
-
-          // Show the modal
-          document.getElementById("resultsModal").style.display = "block";
-        });
-
-      // Close modal when 'X' is clicked
-      document
-        .getElementById("closeModal")
-        .addEventListener("click", function () {
-          document.getElementById("resultsModal").style.display = "none";
-        });
-
-      // Close modal when clicking outside of modal content
-      window.onclick = function (event) {
-        const modal = document.getElementById("resultsModal");
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      };
-    </script>
-    <!-- <script type="text/javascript" src="./game/game.js"></script> -->
-  </body>
+            // Close modal when clicking outside of modal content
+            window.onclick = function (event) {
+                const modal = document.getElementById("resultsModal");
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
+        </script>
+        <!-- <script type="text/javascript" src="./game/game.js"></script> -->
+        <script
+            type="text/javascript"
+            src="https://www.free-counters.org/count/gtbx"
+        ></script>
+        <br />
+        <a href="https://www.versicherungen.at/cyber-versicherung/"
+            >Cyber-Versicherungen</a
+        >
+        <script
+            type="text/javascript"
+            src="https://www.whomania.com/ctr?id=7a1e4c7166752c7c56783b2eaa4bcdb610f71b4b"
+        ></script>
+    </body>
 </html>
