@@ -1,57 +1,60 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maze Battle</title>
-    <link rel="stylesheet" href="./main.css" />
-    <link rel="stylesheet" href="./game.css" />
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Maze Battle</title>
+        <link type="image/svg+xml" rel="icon" href="../favicon.svg" />
+        <link rel="stylesheet" href="./main.css" />
+        <link rel="stylesheet" href="./game.css" />
+    </head>
 
-  <body>
-    <h1>Maze Runner</h1>
-    <div class="timer" id="timer">00:00</div>
-    <div class="game-container">
-      <div id="maze" class="maze"></div>
-      <div id="gameOver" class="game-over">
-        <h2 id="gameOverText">+++Game Over!+++</h2>
-        <button class="control-btn" onclick="startGame()">Play Again</button>
-      </div>
-    </div>
+    <body>
+        <h1>Maze Runner</h1>
+        <div class="timer" id="timer">00:00</div>
+        <div class="game-container">
+            <div id="maze" class="maze"></div>
+            <div id="gameOver" class="game-over">
+                <h2 id="gameOverText">+++Game Over!+++</h2>
+                <button class="control-btn" onclick="startGame()">
+                    Play Again
+                </button>
+            </div>
+        </div>
 
-    <div class="control-buttons">
-      <button id="upArrBtn" class="control-btn">↑</button>
-      <div class="side-buttons">
-        <button id="leftArrBtn" class="control-btn">←</button>
-        <button id="downArrBtn" class="control-btn">↓</button>
-        <button id="rightArrBtn" class="control-btn">→</button>
-      </div>
-    </div>
+        <div class="control-buttons">
+            <button id="upArrBtn" class="control-btn">↑</button>
+            <div class="side-buttons">
+                <button id="leftArrBtn" class="control-btn">←</button>
+                <button id="downArrBtn" class="control-btn">↓</button>
+                <button id="rightArrBtn" class="control-btn">→</button>
+            </div>
+        </div>
 
-    <a id="back-btn" href="../index.html">Back</a>
-    <style>
-      #back-btn,
-      #back-btn:hover {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        text-decoration: none !important;
-        margin-bottom: 20rem;
-      }
+        <a id="back-btn" href="../index.html">Back</a>
+        <style>
+            #back-btn,
+            #back-btn:hover {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                text-align: center;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                text-decoration: none !important;
+                margin-bottom: 20rem;
+            }
 
-      #back-btn:hover {
-        background-color: #0056b3;
-      }
-    </style>
+            #back-btn:hover {
+                background-color: #0056b3;
+            }
+        </style>
 
-    <!-- scripts -->
-    <script type="text/javascript" src="./game.js"></script>
-  </body>
+        <!-- scripts -->
+        <script type="text/javascript" src="./game.js"></script>
+    </body>
 </html>

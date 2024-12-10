@@ -1,0 +1,27 @@
+{
+  "name": "maze-runner",
+  "version": "1.0.3",
+  "description": "maze-running compedition with cpu",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dream-World-Coder/maze-battle.git"
+  },
+  "keywords": [
+    "maze-runner",
+    "maze",
+    "maze-battle",
+    "player",
+    "vs",
+    "cpu"
+  ],
+  "author": "Subhajit Gorai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dream-World-Coder/maze-battle/issues"
+  },
+  "homepage": "https://github.com/Dream-World-Coder/maze-battle#readme"
+}
